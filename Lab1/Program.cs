@@ -2,6 +2,7 @@
 using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace Lab1
 {
@@ -9,10 +10,11 @@ namespace Lab1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            TimeAnalysis<int>.ProgramExecution();           
 
-            TimeAnalysis<int>.ProgramExecution();
         }
+        
+
     }
     public class TimeAnalysis<T>
     {
@@ -28,6 +30,10 @@ namespace Lab1
         public static List<TimeAnalysis<BigInteger>> ResultesSumElement { get; private set; } = new List<TimeAnalysis<BigInteger>>();
         public static List<TimeAnalysis<BigInteger>> ResultesMultElement { get; private set; } = new List<TimeAnalysis<BigInteger>>();
         public static List<TimeAnalysis<BigInteger>> ResultesMethodGornera { get; private set; } = new List<TimeAnalysis<BigInteger>>();
+        public static List<TimeAnalysis<BigInteger>> ResultesInvolutionOne { get; private set; } = new List<TimeAnalysis<BigInteger>>();
+        public static List<TimeAnalysis<BigInteger>> ResultesInvolutionTwo { get; private set; } = new List<TimeAnalysis<BigInteger>>();
+        public static List<TimeAnalysis<BigInteger>> ResultesInvolutionThree { get; private set; } = new List<TimeAnalysis<BigInteger>>();
+        public static List<TimeAnalysis<BigInteger>> ResultesInvolutionFour { get; private set; } = new List<TimeAnalysis<BigInteger>>();
         public static List<TimeAnalysis<int[]>> ResultesBubbleSort { get; private set; } = new List<TimeAnalysis<int[]>>();
         public static List<TimeAnalysis<int[]>> ResultesQuickSort { get; private set; } = new List<TimeAnalysis<int[]>>();
         public static List<TimeAnalysis<int[]>> ResultesTimSort { get; private set; } = new List<TimeAnalysis<int[]>>();
@@ -52,6 +58,20 @@ namespace Lab1
 
             for (int i = 0; i < 2000; i++)
                 TimSort(GetCopysArray(GetLimitedArray(array, i)));
+
+            for (int i = 0; i < 2000; i++)
+                Involution(GetLimitedArray(array, i));
+
+            WriteDateInteger(ResultesSumElement, "sum_elements");
+            WriteDateInteger(ResultesMultElement, "mult_elements");
+            WriteDateInteger(ResultesMethodGornera, "methodgornera_elements");
+            WriteDateInteger(ResultesInvolutionOne, "involution_elements_one");
+            WriteDateInteger(ResultesInvolutionTwo, "involution_elements_two");
+            WriteDateInteger(ResultesInvolutionThree, "involution_elements_three");
+            WriteDateInteger(ResultesInvolutionFour, "involution_elements_four");
+            WriteDateArray(ResultesBubbleSort, "bubble_sort");
+            WriteDateArray(ResultesQuickSort, "quick_sort");
+            WriteDateArray(ResultesTimSort, "tim_sort");
         }
         private static int[] GetNums()
         {
@@ -63,7 +83,7 @@ namespace Lab1
 
                 while (t)
                 {
-                    int num = new Random().Next();
+                    int num = new Random().Next(0, 3000);
 
                     if (!array.Contains(num))
                     {
@@ -175,7 +195,7 @@ namespace Lab1
                 BubbleSortFunction(arrays[i]);
 
             sumTime = DateTime.Now - startT;
-
+            
             ResultesBubbleSort.Add(new TimeAnalysis<int[]>(arrays[0].Length, arrays[0], sumTime / 5));
         }
         private static void BubbleSortFunction(int[] array)
@@ -331,5 +351,108 @@ namespace Lab1
                 array[j + 1] = temp;
             }
         }
+        private static void Involution(int[] array)
+        {
+            const int x = 2;
+            TimeSpan sumTime;
+
+            var startT = DateTime.Now;
+            for (var i = 0; i < 5; i++)
+                InvolutionFunctionOne(array.Last(), x);
+            sumTime = DateTime.Now - startT;
+            ResultesInvolutionOne.Add(new TimeAnalysis<BigInteger>(array.Length, InvolutionFunctionOne(array.Last(), x), sumTime / 5));
+
+            startT = DateTime.Now;
+            for (var i = 0; i < 5; i++)
+                InvolutionFunctionTwo(array.Last(), x);
+            sumTime = DateTime.Now - startT;
+            ResultesInvolutionTwo.Add(new TimeAnalysis<BigInteger>(array.Length, InvolutionFunctionTwo(array.Last(), x), sumTime / 5));
+
+            startT = DateTime.Now;
+            for (var i = 0; i < 5; i++)
+                InvolutionFunctionThree(array.Last(), x);
+            sumTime = DateTime.Now - startT;
+            ResultesInvolutionThree.Add(new TimeAnalysis<BigInteger>(array.Length, InvolutionFunctionThree(array.Last(), x), sumTime / 5));
+
+            startT = DateTime.Now;
+            for (var i = 0; i < 5; i++)
+                InvolutionFunctionFour(array.Last(), x);
+            sumTime = DateTime.Now - startT;
+            ResultesInvolutionFour.Add(new TimeAnalysis<BigInteger>(array.Length, InvolutionFunctionFour(array.Last(), x), sumTime / 5));
+        }
+        private static BigInteger InvolutionFunctionOne(int n, int x)
+        {
+            BigInteger res = 1;
+            int k = 0;
+
+            while(k < n)
+            {
+                res *= x;
+                k = k + 1;
+            }
+
+            return res;
+        }
+        private static BigInteger InvolutionFunctionTwo(int n, int x)
+        {
+            BigInteger res = 1;
+            if (n == 0) return 1;
+            else
+            {
+                res = InvolutionFunctionTwo(n / 2, x);
+
+                if (n % 2 == 1)
+                    res = res * res * x;
+                else
+                    res = res * res;
+
+                return res;
+            }
+        }
+        private static BigInteger InvolutionFunctionThree(int n, int x)
+        {
+            BigInteger res;
+            BigInteger c = x; int k = n;
+
+            if(k % 2 == 1) res = c;
+            else res = 1;
+
+            while (k != 0)
+            {
+                k = k / 2;
+                c = c * c;
+
+                if (k % 2 == 1) res = res * c;
+            }
+
+            return res;
+        }
+        private static BigInteger InvolutionFunctionFour(int n, int x)
+        {
+            BigInteger res = 1;
+            BigInteger c = x; int k = n;
+
+            while(k != 0)
+            {
+                if(k % 2 == 0)
+                {
+                    c = c * c;
+                    k = k / 2;
+                }
+                else
+                {
+                    res = res * c;
+                    k = k - 1;
+                }
+            }
+
+            return res;
+        }
+        private static void WriteDateInteger(List<TimeAnalysis<BigInteger>> res, string name)
+            =>File.WriteAllLines(@$"../../../{name}.csv",
+                res.OrderBy(e => e.AverageTime).Select(e => e.AverageTime.TotalMilliseconds.ToString().Replace(',', '.') + ',' + e.CountN.ToString()).ToArray());
+        private static void WriteDateArray(List<TimeAnalysis<int[]>> res, string name)
+            =>File.WriteAllLines(@$"../../../{name}.csv",
+                res.OrderBy(e => e.AverageTime).Select(e => e.AverageTime.TotalMilliseconds.ToString().Replace(',', '.') + ',' + e.CountN.ToString()).ToArray());
     }
 }
