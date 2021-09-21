@@ -10,7 +10,8 @@ namespace Lab1
     {
         static void Main(string[] args)
         {
-            TimeAnalysis<int>.ProgramExecution();           
+           // TimeAnalysis<int>.ProgramExecutionOne();
+            TimeAnalysis<int>.ProgramExecutionTwo();
 
         }
         
@@ -37,7 +38,8 @@ namespace Lab1
         public static List<TimeAnalysis<int[]>> ResultesBubbleSort { get; private set; } = new List<TimeAnalysis<int[]>>();
         public static List<TimeAnalysis<int[]>> ResultesQuickSort { get; private set; } = new List<TimeAnalysis<int[]>>();
         public static List<TimeAnalysis<int[]>> ResultesTimSort { get; private set; } = new List<TimeAnalysis<int[]>>();
-        public static void ProgramExecution()
+        public static List<TimeAnalysis<Matrix>> ResultesMatrixMult { get; private set; } = new List<TimeAnalysis<Matrix>>();
+        public static void ProgramExecutionOne()
         {
             int[] array = GetNums();
 
@@ -450,9 +452,89 @@ namespace Lab1
         }
         private static void WriteDateInteger(List<TimeAnalysis<BigInteger>> res, string name)
             =>File.WriteAllLines(@$"../../../{name}.csv",
-                res.OrderBy(e => e.AverageTime).Select(e => e.AverageTime.TotalMilliseconds.ToString().Replace(',', '.') + ',' + e.CountN.ToString()).ToArray());
+                res.OrderBy(e => e.AverageTime).Select(e => (e.AverageTime.TotalMilliseconds * 10000).ToString().Replace(',', '.') + ';' + e.CountN.ToString()).ToArray());
         private static void WriteDateArray(List<TimeAnalysis<int[]>> res, string name)
             =>File.WriteAllLines(@$"../../../{name}.csv",
-                res.OrderBy(e => e.AverageTime).Select(e => e.AverageTime.TotalMilliseconds.ToString().Replace(',', '.') + ',' + e.CountN.ToString()).ToArray());
+                res.OrderBy(e => e.AverageTime).Select(e => (e.AverageTime.TotalMilliseconds * 10000).ToString().Replace(',', '.') + ';' + e.CountN.ToString()).ToArray());
+        public static void ProgramExecutionTwo()
+        {
+            Matrix matrixA = new Matrix(2000), matrixB = new Matrix(2000);
+
+            for (int i = 0; i < 2000; i++)
+            {
+                GetMatrix(matrixA, i);
+                GetMatrix(matrixB, i);
+            }
+
+            for (int i = 0; i < 2000; i++)
+                MatrixMult(matrixA, matrixB, i);
+
+            WriteDateMatrix(ResultesMatrixMult, "matrix_mult");
+        }
+        private static void GetMatrix(Matrix matrix, int N)
+        {
+            int[] array = new int[2000];
+            for(int i = 0; i < 2000; i++)
+            {
+                array[i] = new Random().Next(100);
+            }
+
+            Matrix.AddStr(array, N, matrix);
+        }
+        private static void MatrixMult(Matrix matrixA, Matrix matrixB, int N)
+        {
+            Console.WriteLine(N);
+
+            TimeSpan sumTime;
+            var startT = DateTime.Now;
+
+            for (int i = 0; i < 5; i++)
+                MatrixMultFuncion(matrixA, matrixB, N);
+
+            sumTime = DateTime.Now - startT;
+
+            ResultesMatrixMult.Add(new TimeAnalysis<Matrix>(N+1, MatrixMultFuncion(matrixA, matrixB, N), sumTime / 5));
+        }
+        private static Matrix MatrixMultFuncion(Matrix matrixA, Matrix matrixB, int N)
+        {
+            Matrix res = new Matrix(N + 1);
+            int[] t = new int[N + 1];
+
+            for(int i = 0; i <= N; i++)
+            {
+                for(int j = 0; j <= N; j++)
+                {
+                    t[j] = matrixA.Strings[i].Str[j] * matrixB.Strings[i].Str[j];                    
+                }
+                Matrix.AddStr(t, i, res);
+            }
+
+            return res;
+        }
+        private static void WriteDateMatrix(List<TimeAnalysis<Matrix>> res, string name)
+           => File.WriteAllLines(@$"../../../{name}.csv",
+               res.OrderBy(e => e.AverageTime).Select(e => (e.AverageTime.TotalMilliseconds * 10000).ToString().Replace(',', '.') + ';' + e.CountN.ToString()).ToArray());
+
+        public class Matrix
+        {
+            public OneString[] Strings { get; private set; }
+            public Matrix(int N)
+            {
+                Strings = new OneString[N];
+            }
+            public static void AddStr(int[] str, int n, Matrix matrix)
+            {
+                matrix.Strings[n] = new OneString(str);
+            }
+
+        }
+        public class OneString
+        {
+            public int[] Str { get; }
+            public OneString(int[] str)
+            {
+                Str = str;
+            }
+        }
     }
 }
