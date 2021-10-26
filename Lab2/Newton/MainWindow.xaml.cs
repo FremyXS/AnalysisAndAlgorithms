@@ -16,83 +16,85 @@ using System.Windows.Shapes;
 
 namespace Newton
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
-		public Bitmap bmp = new Bitmap(1, 1);
-		public int W = 600;
-		public double rmin = 0.01;
-		public int kmax = 80;
-		public int[,] M;
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
+	public partial class MainWindow : Window
+	{
 		public double size = 2.0;
+		public double rmin = 0.01;
 		public double minx = -1.0, miny = -1.0;
-		public int N = 5;
-		public System.Drawing.Color color = System.Drawing.Color.Blue;
-		public System.Drawing.Color back = System.Drawing.Color.White;
+
+		public int W = 600;
+		public int N = 3;
+
+		public Bitmap bmp;
+		public int kmax = 50;
+		public int[,] M;
+
+		public System.Drawing.Color color = System.Drawing.Color.Purple;
 		public MainWindow()
-        {
-            InitializeComponent();
+		{
+			InitializeComponent();
 
 			bmp = new Bitmap(W, W);
 			M = new int[W, W];
-			calc(); //рассчитать
-			draw(); //нарисовать
+			Calc();
+			Draw();
 		}
-		void calc()
+		private void Calc()
 		{
-			double xt, yt;
 			Complex c = new Complex();
 			Complex cn = new Complex();
 			Complex ct;
 			int k;
+
 			for (int i = 0; i < W; i++)
 			{
 				for (int j = 0; j < W; j++)
-				{ //начальные значения
-					c.re = minx + (i * size) / (double)W;
-					c.im = miny + (j * size) / (double)W;
+				{
+					c.Re = minx + (i * size) / (double)W;
+					c.Im = miny + (j * size) / (double)W;
+
 					for (k = 0; k < kmax; k++)
 					{
-						//Вычисление c - (c^N - 1) / (c^(N - 1) * N)
-						cn = c.pow(N) + (-1.0);
-						cn = cn / ((c.pow(N - 1)) * ((double)N));
+						cn = c.Pow(N) + (1.0);
+						cn = cn / ((c.Pow(N - 1)) * (double)N);
 						cn = c - cn;
-						ct = cn.pow(N);
-						xt = ct.re;
-						yt = ct.im;
-						if (Math.Abs(xt * xt + yt * yt - 1) < rmin * rmin) //условие остановки
+						ct = cn.Pow(N);
+
+
+						if (Math.Abs(ct.Re * ct.Re + ct.Im * ct.Im - 1) < rmin * rmin) //условие остановки
 							break;
+
 						c = new Complex(cn);
 					}
+
 					M[i, j] = k;
 				}
 
 			}
 		}
-
-        private void content_Loaded(object sender, RoutedEventArgs e)
-        {
-			img.Source = BmpImageFromBmp(bmp);
-		}
-
-        void draw()
+		private void Draw()
 		{
 			Graphics g = Graphics.FromImage(bmp);
-			g.Clear(back); //заливка фона
+			g.Clear(System.Drawing.Color.Pink);
 			int col;
+
 			for (int i = 0; i < W; i++)
+			{
 				for (int j = 0; j < W; j++)
 				{
-					col = (M[i, j]*255)/kmax; //вычисление прозрачности цвета в текущей точке
-                    System.Drawing.Pen p = new System.Drawing.Pen(System.Drawing.Color.FromArgb(col, color));
+					col = M[i, j] * 255 / kmax;
+					System.Drawing.Pen p = new System.Drawing.Pen(System.Drawing.Color.FromArgb(col, color));
 					g.DrawRectangle(p, i, j, 1, 1);
-					p.Dispose();
 				}
-			g.Dispose();
-
-		}		
+			}
+		}
+		private void content_Loaded(object sender, RoutedEventArgs e)
+		{
+			img.Source = BmpImageFromBmp(bmp);
+		}
 		private BitmapImage BmpImageFromBmp(Bitmap bmp)
 		{
 			using (var memory = new System.IO.MemoryStream())

@@ -8,57 +8,52 @@ namespace Newton
 {
 	class Complex
 	{
-		public double re = 0.0, im = 0.0;
-		public Complex(double R, double I)
+		public double Re = 0.0;
+		public double Im = 0.0;
+		public Complex(double re, double im)
 		{
-			re = R;
-			im = I;
+			Re = re;
+			Im = im;
 		}
 		public Complex(Complex c)
 		{
-			re = c.re;
-			im = c.im;
+			Re = c.Re;
+			Im = c.Im;
 		}
 		public Complex() { }
 		public static Complex operator *(Complex x, Complex y)
 		{
-			return new Complex(x.re * y.re - x.im * y.im, x.re * y.im + x.im * y.re);
-		}
-		public static Complex operator +(Complex x, Complex y)
-		{
-			return new Complex(x.re + y.re, x.im + y.im);
+			return new Complex(x.Re * y.Re - x.Im * y.Im, x.Re * y.Im + x.Im * y.Re);
 		}
 		public static Complex operator -(Complex x, Complex y)
 		{
-			return new Complex(x.re - y.re, x.im - y.im);
+			return new Complex(x.Re - y.Re, x.Im - y.Im);
 		}
 		public static Complex operator /(Complex x, Complex y)
 		{
 			Complex ch = new Complex(y);
 			Complex t2 = new Complex(x);
-			ch.im *= -1;
+			ch.Im *= -1;
 			t2 = x * ch;
-			double div = (y * ch).re;
-			return new Complex(t2.re / div, t2.im / div);
+			double div = (y * ch).Re;
+			return new Complex(t2.Re / div, t2.Im / div);
 		}
 		public static Complex operator +(Complex x, double y)
 		{
-			return new Complex(x.re + y, x.im);
+			return new Complex(x.Re + y, x.Im);
 		}
 		public static Complex operator *(Complex x, double y)
 		{
-			return new Complex(x.re * y, x.im * y);
+			return new Complex(x.Re * y, x.Im * y);
 		}
-		public Complex pow(int p)
+		public Complex Pow(int p)
 		{
 			Complex res = new Complex(this);
+
 			for (int i = 1; i < p; i++)
 				res = res * this;
+
 			return res;
-		}
-		public double abs()
-		{
-			return Math.Sqrt(re * re + im * im);
 		}
 	}
 }
