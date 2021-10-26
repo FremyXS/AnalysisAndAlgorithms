@@ -32,7 +32,6 @@ namespace Newton
 		public int kmax = 50;
 		public int[,] M;
 
-		public System.Drawing.Color color = System.Drawing.Color.Purple;
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -64,7 +63,7 @@ namespace Newton
 						ct = cn.Pow(N);
 
 
-						if (Math.Abs(ct.Re * ct.Re + ct.Im * ct.Im - 1) < rmin * rmin) //условие остановки
+						if (Math.Abs(ct.Re * ct.Re + ct.Im * ct.Im - 1) < rmin * rmin)
 							break;
 
 						c = new Complex(cn);
@@ -86,7 +85,10 @@ namespace Newton
 				for (int j = 0; j < W; j++)
 				{
 					col = M[i, j] * 255 / kmax;
-					System.Drawing.Pen p = new System.Drawing.Pen(System.Drawing.Color.FromArgb(col, color));
+
+					System.Drawing.Pen p 
+						= new System.Drawing.Pen(System.Drawing.Color.FromArgb(col, System.Drawing.Color.Purple));
+
 					g.DrawRectangle(p, i, j, 1, 1);
 				}
 			}
