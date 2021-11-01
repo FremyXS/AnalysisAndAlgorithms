@@ -8,10 +8,14 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <StackPanel x:Name="content">
-            <DockPanel >
+            <DockPanel>
                 <Button Height="20px" Width="100px" Click="Button_Click">Задать</Button>
                 <Button Height="20px" Width="100px" Click="Button_Click_1">Начать</Button>
                 <TextBox x:Name="N"></TextBox>
+                
+            </DockPanel>
+            <DockPanel>
+                <TextBlock x:Name="CNT"></TextBlock>
             </DockPanel>
             <Grid Height="424" Width="790" x:Name="gridTw">
                 <Grid.ColumnDefinitions>
@@ -22,7 +26,9 @@
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                
+                <StackPanel x:Name="st1" Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom"></StackPanel>
+                <StackPanel x:Name="st2" Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom"></StackPanel>
+                <StackPanel x:Name="st3" Grid.Row="0" Grid.Column="2" VerticalAlignment="Bottom"></StackPanel>
             </Grid>
         </StackPanel>
     </Grid>

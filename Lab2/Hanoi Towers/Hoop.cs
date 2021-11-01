@@ -26,5 +26,9 @@ namespace Hanoi_Towers
                 Stroke = Brushes.Black
             };
         }
+        public static bool operator >(Hoop one, Hoop two)
+            => one.Ind > two.Ind;
+        public static bool operator <(Hoop one, Hoop two)
+            => one.Ind < two.Ind;
     }
 }
