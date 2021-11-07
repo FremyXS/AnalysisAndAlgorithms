@@ -27,7 +27,6 @@ namespace Hanoi_Towers
         public MainWindow()
         {
             InitializeComponent();            
-
         }
         private void GetTower(Stack<Hoop> hoops, int i, int j, StackPanel st)
         {
@@ -53,204 +52,82 @@ namespace Hanoi_Towers
             while(one.Hoops.Count > 0 || two.Hoops.Count > 0)
             {
                 for(int i = 0; i < 3; i++)
-                {
+                {                    
+                    if(one.Hoops.Count == 1 && two.Hoops.Count == 0)
+                        three.Hoops.Push(one.Hoops.Pop());
+                    if (one.Hoops.Count == 0 && two.Hoops.Count == 1)
+                        three.Hoops.Push(two.Hoops.Pop());
                     if (one.Hoops.Count == 0 && two.Hoops.Count == 0)
                         break;
 
-                    if (i == 0)
-                    {
-                        if (cht)
-                        {
-                            if (one.Hoops.Count == 0 && two.Hoops.Count == 0)
-                                continue;
-
-                            if (two.Hoops.Count == 0 && one.Hoops.Count != 0)
-                            {
-                                two.Hoops.Push(one.Hoops.Pop());
-                            }
-                            else if(two.Hoops.Count != 0 && one.Hoops.Count == 0)
-                            {
-                                one.Hoops.Push(two.Hoops.Pop());
-                            }
-                            else
-                            {
-                                if (one.Hoops.Count != 0)
-                                {
-                                    if (one.Hoops.Peek() < two.Hoops.Peek())
-                                        two.Hoops.Push(one.Hoops.Pop());
-                                    else
-                                        one.Hoops.Push(two.Hoops.Pop());
-                                }
-                                
-                            }
-                        }
-                        else
-                        {
-                            if (one.Hoops.Count == 0 && three.Hoops.Count == 0)
-                                continue;
-
-                            if (three.Hoops.Count == 0 && one.Hoops.Count !=0)
-                            {
-                                three.Hoops.Push(one.Hoops.Pop());
-                            }
-                            else if (three.Hoops.Count != 0 && one.Hoops.Count == 0)
-                            {
-                                one.Hoops.Push(three.Hoops.Pop());
-                            }
-                            else
-                            {
-                                if (one.Hoops.Count != 0)
-                                {
-                                    if (one.Hoops.Peek() < three.Hoops.Peek())
-                                        three.Hoops.Push(one.Hoops.Pop());
-                                    else
-                                        one.Hoops.Push(three.Hoops.Pop());
-                                }
-                            }
-                        }
-                    }
-                    else if (i == 1)
-                    {
-                        if (cht)
-                        {
-
-                            if (one.Hoops.Count != 0 && three.Hoops.Count == 0)
-                            {
-                                three.Hoops.Push(one.Hoops.Pop());
-                            }
-                            else if(one.Hoops.Count == 0 && three.Hoops.Count != 0)
-                            {
-                                one.Hoops.Push(three.Hoops.Pop());
-                            }
-                            else
-                            {
-                                if (one.Hoops.Peek() < three.Hoops.Peek())
-                                    three.Hoops.Push(one.Hoops.Pop());
-                                else
-                                    one.Hoops.Push(three.Hoops.Pop());
-                            }
-                        }
-                        else
-                        {
-                            if (two.Hoops.Count == 0 && one.Hoops.Count == 0)
-                                continue;
-
-                            if (two.Hoops.Count == 0 && one.Hoops.Count != 0)
-                            {
-                                two.Hoops.Push(one.Hoops.Pop());
-                            }
-                            else if (two.Hoops.Count != 0 && one.Hoops.Count == 0)
-                            {
-                                one.Hoops.Push(two.Hoops.Pop());
-                            }
-                            else
-                            {
-                                if (one.Hoops.Count != 0)
-                                {
-                                    if (one.Hoops.Peek() < two.Hoops.Peek())
-                                        two.Hoops.Push(one.Hoops.Pop());
-                                    else
-                                        one.Hoops.Push(two.Hoops.Pop());
-                                }
-                            }
-                        }
-                    }
+                    if (cht)
+                        Moving(ref one, ref two, ref three, i);
                     else
-                    {
-                        if (two.Hoops.Count != 0 && three.Hoops.Count == 0)
-                        {
-                            three.Hoops.Push(two.Hoops.Pop());
-                        }
-                        else if(two.Hoops.Count == 0 && three.Hoops.Count != 0)
-                        {
-                            two.Hoops.Push(three.Hoops.Pop());
-                        }
-                        else
-                        {
-                            if (two.Hoops.Peek() < three.Hoops.Peek())
-                                three.Hoops.Push(two.Hoops.Pop());
-                            else
-                                two.Hoops.Push(three.Hoops.Pop());
-                        }
-                    }
+                        Moving(ref one, ref three, ref two, i);
 
                     CountMove++;
                 }
 
             }
 
-        }
-        private void Moving(ref Tower one, ref Tower two, ref Tower three)
+        }      
+        private void Moving(ref Tower one, ref Tower two, ref Tower three, int i)
         {
-            if (one.Hoops.Count == 0)
+            switch (i)
             {
-                if(two.Hoops.Peek() > three.Hoops.Peek())
-                {
-                    one.Hoops.Push(two.Hoops.Pop());
-                    two.Hoops.Push(three.Hoops.Pop());
-                    CountMove+=2;
-                }
-                else
-                {
-                    three.Hoops.Push(two.Hoops.Pop());
-                    CountMove++;
-                }
-            }
-            else if (one.Hoops.Count != 0 && two.Hoops.Count == 0)
-            {
-                if (one.Hoops.Peek() < two.Hoops.Peek())
-                    three.Hoops.Push(one.Hoops.Peek());
-                else
-                    two.Hoops.Push(one.Hoops.Peek());
-
-            }
-            else
-            {
-                if (one.Hoops.Peek() > two.Hoops.Peek() && one.Hoops.Peek() > three.Hoops.Peek())
-                {
-                    if (two.Hoops.Peek() > three.Hoops.Peek())
+                case 0:
+                    if (two.Hoops.Count == 0 && one.Hoops.Count != 0)
                     {
-                        two.Hoops.Push(three.Hoops.Pop());
-                        three.Hoops.Push(one.Hoops.Pop());
-                        CountMove += 2;
+                        two.Hoops.Push(one.Hoops.Pop());
+                    }
+                    else if (two.Hoops.Count != 0 && one.Hoops.Count == 0)
+                    {
+                        one.Hoops.Push(two.Hoops.Pop());
                     }
                     else
                     {
-                        three.Hoops.Push(two.Hoops.Pop());
-                        two.Hoops.Push(one.Hoops.Pop());
-                        CountMove += 2;
+                        if (one.Hoops.Peek() < two.Hoops.Peek())
+                            two.Hoops.Push(one.Hoops.Pop());
+                        else
+                            one.Hoops.Push(two.Hoops.Pop());
+
                     }
-                }
-                else if (one.Hoops.Peek() > two.Hoops.Peek() && one.Hoops.Peek() < three.Hoops.Peek())
-                {
-                    three.Hoops.Push(two.Hoops.Pop());
-                    two.Hoops.Push(one.Hoops.Pop());
-                    CountMove += 2;
-                }
-                else if (one.Hoops.Peek() < two.Hoops.Peek() && one.Hoops.Peek() > three.Hoops.Peek())
-                {
-                    two.Hoops.Push(three.Hoops.Pop());
-                    three.Hoops.Push(one.Hoops.Pop());
-                    CountMove += 2;
-                }
-                else
-                {
-                    if (two.Hoops.Peek() > three.Hoops.Peek())
+                    break;
+                case 1:
+                    if (one.Hoops.Count != 0 && three.Hoops.Count == 0)
                     {
-                        two.Hoops.Push(three.Hoops.Pop());
                         three.Hoops.Push(one.Hoops.Pop());
-                        CountMove += 2;
+                    }
+                    else if (one.Hoops.Count == 0 && three.Hoops.Count != 0)
+                    {
+                        one.Hoops.Push(three.Hoops.Pop());
                     }
                     else
                     {
-                        three.Hoops.Push(two.Hoops.Pop());
-                        two.Hoops.Push(one.Hoops.Pop());
-                        CountMove += 2;
+                        if (one.Hoops.Peek() < three.Hoops.Peek())
+                            three.Hoops.Push(one.Hoops.Pop());
+                        else
+                            one.Hoops.Push(three.Hoops.Pop());
                     }
-                }
+                    break;
+                case 2:
+                    if (two.Hoops.Count != 0 && three.Hoops.Count == 0)
+                    {
+                        three.Hoops.Push(two.Hoops.Pop());
+                    }
+                    else if (two.Hoops.Count == 0 && three.Hoops.Count != 0)
+                    {
+                        two.Hoops.Push(three.Hoops.Pop());
+                    }
+                    else
+                    {
+                        if (two.Hoops.Peek() < three.Hoops.Peek())
+                            three.Hoops.Push(two.Hoops.Pop());
+                        else
+                            two.Hoops.Push(three.Hoops.Pop());
+                    }
+                    break;
             }
-
-            
         }
             
         private void Button_Click(object sender, RoutedEventArgs e)
