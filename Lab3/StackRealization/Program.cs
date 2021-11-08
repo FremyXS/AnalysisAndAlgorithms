@@ -14,8 +14,8 @@ namespace StackRealization
         static void Main(string[] args)
         {
             //ExecutionOne(File.ReadAllText(@"../../../input.txt").Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
-            //ExecutionTwo("(2+2^2)-1*9");
-            ExecutionThree(File.ReadAllLines(@"../../../input2.txt"));
+            ExecutionTwo("5-6*4^4-(5*(4-2^4))");
+            //ExecutionThree(File.ReadAllLines(@"../../../input2.txt"));
         }
         private static void ExecutionOne(string[] commands)
         {
@@ -258,11 +258,14 @@ namespace StackRealization
         public void Print()
         {
             if (Head.Next is not null)
-                GetItem(Head);            
+                GetItem(Head);
+
+            Console.WriteLine();
         }
         private void GetItem(StackItem stackItem)
         {
-            Console.WriteLine(stackItem.Value);
+            Console.Write(stackItem.Value);
+            Console.Write(" ");
             if (stackItem.Next is not null)
                 GetItem(stackItem.Next);
         }
