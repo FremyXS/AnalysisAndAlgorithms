@@ -1,0 +1,32 @@
+﻿<Window x:Class="InternalSorting.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InternalSorting"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <DockPanel>
+            <DockPanel MaxHeight="50px" DockPanel.Dock="Top">
+                <Button Width="100px" Click="GetNumsBtClick">Задать</Button>
+                <Button Width="100px" Click="StartSortBtClick">Начать</Button>
+                <TextBlock Margin="5px 0 0 0" Width="39">Длина:</TextBlock>
+                <TextBox Width="100px" x:Name="countNums"></TextBox>
+                <TextBlock Margin="5px 0 0 0" Width="58">Задержка:</TextBlock>
+                <Button Click="Minus100Click" Padding="5px 0">-100</Button>
+                <Button Click="Minus10Click" Padding="5px 0">-10</Button>
+                <TextBox Width="100px" x:Name="ping"></TextBox>
+                <Button Click="Plus10Click" Padding="5px 0">+10</Button>
+                <Button Click="Plus100Click" Padding="5px 0">+100</Button>
+                <RadioButton GroupName="sort" Checked="RadioButton_Checked" >GnomeSort</RadioButton>
+                <RadioButton GroupName="sort" Checked="RadioButton_Checked">CombSort</RadioButton>
+            </DockPanel>
+            <StackPanel DockPanel.Dock="Top" x:Name="contentst" Height="300px" MinWidth="800px" Orientation="Horizontal"></StackPanel>
+            <Label Content="Log Details" Grid.Row="4" DockPanel.Dock="Top"></Label>
+            <ScrollViewer DockPanel.Dock="Top">
+                <StackPanel x:Name="logs"></StackPanel>
+            </ScrollViewer>
+        </DockPanel>
+    </Grid>
+</Window>

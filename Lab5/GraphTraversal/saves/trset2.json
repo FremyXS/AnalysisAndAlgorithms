@@ -1,0 +1,252 @@
+[
+  {
+    "Name": "x0",
+    "Connections": [
+      {
+        "Flow": "10",
+        "EndHost": {
+          "Name": "x2",
+          "Connections": [
+            {
+              "Flow": "3",
+              "EndHost": {
+                "Name": "x7",
+                "Connections": [
+                  {
+                    "Flow": "4",
+                    "EndHost": {
+                      "Name": "x8",
+                      "Connections": [],
+                      "IsVisited": false,
+                      "X": 748.8000000000002,
+                      "Y": 284.0
+                    },
+                    "IsOriented": true
+                  }
+                ],
+                "IsVisited": false,
+                "X": 497.6,
+                "Y": 176.8
+              },
+              "IsOriented": true
+            },
+            {
+              "Flow": "2",
+              "EndHost": {
+                "Name": "x1",
+                "Connections": [
+                  {
+                    "Flow": "3",
+                    "EndHost": {
+                      "Name": "x8",
+                      "Connections": [],
+                      "IsVisited": false,
+                      "X": 748.8000000000002,
+                      "Y": 284.0
+                    },
+                    "IsOriented": true
+                  }
+                ],
+                "IsVisited": false,
+                "X": 404.0,
+                "Y": 286.4
+              },
+              "IsOriented": true
+            }
+          ],
+          "IsVisited": false,
+          "X": 284.0,
+          "Y": 165.6
+        },
+        "IsOriented": true
+      },
+      {
+        "Flow": "7",
+        "EndHost": {
+          "Name": "x3",
+          "Connections": [
+            {
+              "Flow": "5",
+              "EndHost": {
+                "Name": "x6",
+                "Connections": [
+                  {
+                    "Flow": "9",
+                    "EndHost": {
+                      "Name": "x8",
+                      "Connections": [],
+                      "IsVisited": false,
+                      "X": 748.8000000000002,
+                      "Y": 284.0
+                    },
+                    "IsOriented": true
+                  }
+                ],
+                "IsVisited": false,
+                "X": 503.19999999999993,
+                "Y": 394.4
+              },
+              "IsOriented": true
+            }
+          ],
+          "IsVisited": false,
+          "X": 252.80000000000007,
+          "Y": 408.00000000000006
+        },
+        "IsOriented": true
+      }
+    ],
+    "IsVisited": false,
+    "X": 66.40000000000003,
+    "Y": 286.4
+  },
+  {
+    "Name": "x1",
+    "Connections": [
+      {
+        "Flow": "3",
+        "EndHost": {
+          "Name": "x8",
+          "Connections": [],
+          "IsVisited": false,
+          "X": 748.8000000000002,
+          "Y": 284.0
+        },
+        "IsOriented": true
+      }
+    ],
+    "IsVisited": false,
+    "X": 404.0,
+    "Y": 286.4
+  },
+  {
+    "Name": "x2",
+    "Connections": [
+      {
+        "Flow": "3",
+        "EndHost": {
+          "Name": "x7",
+          "Connections": [
+            {
+              "Flow": "4",
+              "EndHost": {
+                "Name": "x8",
+                "Connections": [],
+                "IsVisited": false,
+                "X": 748.8000000000002,
+                "Y": 284.0
+              },
+              "IsOriented": true
+            }
+          ],
+          "IsVisited": false,
+          "X": 497.6,
+          "Y": 176.8
+        },
+        "IsOriented": true
+      },
+      {
+        "Flow": "2",
+        "EndHost": {
+          "Name": "x1",
+          "Connections": [
+            {
+              "Flow": "3",
+              "EndHost": {
+                "Name": "x8",
+                "Connections": [],
+                "IsVisited": false,
+                "X": 748.8000000000002,
+                "Y": 284.0
+              },
+              "IsOriented": true
+            }
+          ],
+          "IsVisited": false,
+          "X": 404.0,
+          "Y": 286.4
+        },
+        "IsOriented": true
+      }
+    ],
+    "IsVisited": false,
+    "X": 284.0,
+    "Y": 165.6
+  },
+  {
+    "Name": "x3",
+    "Connections": [
+      {
+        "Flow": "5",
+        "EndHost": {
+          "Name": "x6",
+          "Connections": [
+            {
+              "Flow": "9",
+              "EndHost": {
+                "Name": "x8",
+                "Connections": [],
+                "IsVisited": false,
+                "X": 748.8000000000002,
+                "Y": 284.0
+              },
+              "IsOriented": true
+            }
+          ],
+          "IsVisited": false,
+          "X": 503.19999999999993,
+          "Y": 394.4
+        },
+        "IsOriented": true
+      }
+    ],
+    "IsVisited": false,
+    "X": 252.80000000000007,
+    "Y": 408.00000000000006
+  },
+  {
+    "Name": "x6",
+    "Connections": [
+      {
+        "Flow": "9",
+        "EndHost": {
+          "Name": "x8",
+          "Connections": [],
+          "IsVisited": false,
+          "X": 748.8000000000002,
+          "Y": 284.0
+        },
+        "IsOriented": true
+      }
+    ],
+    "IsVisited": false,
+    "X": 503.19999999999993,
+    "Y": 394.4
+  },
+  {
+    "Name": "x7",
+    "Connections": [
+      {
+        "Flow": "4",
+        "EndHost": {
+          "Name": "x8",
+          "Connections": [],
+          "IsVisited": false,
+          "X": 748.8000000000002,
+          "Y": 284.0
+        },
+        "IsOriented": true
+      }
+    ],
+    "IsVisited": false,
+    "X": 497.6,
+    "Y": 176.8
+  },
+  {
+    "Name": "x8",
+    "Connections": [],
+    "IsVisited": false,
+    "X": 748.8000000000002,
+    "Y": 284.0
+  }
+]
